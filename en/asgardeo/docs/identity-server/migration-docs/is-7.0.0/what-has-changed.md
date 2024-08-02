@@ -1,0 +1,817 @@
+# What Has Changed
+WSO2 Identity Server 7.0.0 brings a range of new features and major improvements. This page provides details about the behavioral changes from WSO2 Identity Server 6.1.0 to 7.0.0.
+
+
+> **If you are migrating from an older version of Identity Server**
+>
+> To find the changes introduced in the previous versions, you can refer to the following documents
+>  - [What Has Changed in IS 6.1.0](../is-6.1.0/what-has-changed.md)
+>  - [What Has Changed in IS 6.0.0](../is-6.0.0/what-has-changed.md)
+>  - [What Has Changed in IS 5.11.0](../is-5.11.0/migrating-what-has-changed.md)
+>  - [What Has Changed in IS 5.10.0](../is-5.10.0/migrating-what-has-changed.md)
+>  - [What Has Changed in IS 5.9.0](../is-5.9.0/migrating-what-has-changed.md)
+>  - **Migrating the Configurations** section in the [Upgrading From an Older Version of WSO2 IS](../is-5.8.0/upgrading-from-older-version.md) document
+
+## Significant Changes
+
+### Tenant qualified URLs and tenanted sessions
+
+WSO2 Identity Server now supports tenant-qualified URLs for all the endpoints exposed from the product. This enables clear
+isolation between tenants, especially with managing non-conflicting tenant bound user sessions, and provides the
+capability to easily configure routing rules.
+
+**This change only impacts deployments with multi tenant setups.** Application in other tenants except the super 
+tenant should be migrated to support the tenant-qualified URLs. Migration impact related details are included in the 
+[Migrating applications for tenanted qualified URLs](migrating-applications-for-tenanted-qualified-urls.md) document.
+
+### Authorization Model
+
+With IS 7.0.0, the authorization model has undergone significant changes. The following are the key changes in the
+authorization model.
+
+#### Scopes/Permissions representation
+In prior versions, customer scopes were represented using OAuth2 scopes and system permissions and scopes were
+represented using internal permissions/scopes as defined in the `oauth-scope-binding.xml` file. From IS 7.0.0 onwards,
+both customer scopes and system scopes are represented as API Resources.
+
+Migration of the scopes from previous model to the new model is handled through the migration client as explained in
+the [Migrating Authorization Model](migrating-authorization-model.md) document.
+
+#### API Authorization
+In prior versions, scopes are issued for the applications if the user roles are permitted access for the requested scopes. From IS 7.0.0
+onwards, scopes should be authorized through the API authorization capability in order to be issued for the applications.
+
+Migration of the scopes from previous model to the new model is handled through the migration client as explained in the [Migrating Authorization Model](migrating-authorization-model.md) document.
+
+#### Roles implementation
+IS 7.0.0 introduces roles V2 implementation with audience support giving you capability to create both organization audience roles and application audience roles.
+
+Migration of the roles from previous model to the new model is handled through the migration client as explained in the [Migrating Authorization Model](migrating-authorization-model.md) document.
+
+Along with the new role V2 implementation, new adaptive script functions are introduced to handle the role-related operations which were previously handled by functions specific to the V1 implementation.
+
+Migration of the roles related adaptive script functions needs to be handled as explained in the [Migrating Roles Related Adaptive Script Functions](migrating-roles-related-adaptive-script-functions.md) document.
+
+#### IdP role to local role mappings
+In the prior versions, IdP role to local role mappings were used for federated user authorization. In IS 7.0.0, IdP groups capability will be used for the authorization of federated users.
+
+Migration of IdP roles to local role mappings to IdP groups to local role assignments is handled through the migration client as explained in the [Migrating Authorization Model](migrating-authorization-model.md) document.
+
+With the IdP Group capability, attribute mapped to local group claim is used as the IdP group attribute. You need to configure the IdP group attribute in the connection configurations using attribute mappings. If you need to use the previous attribute used with the IdP role to local role mappings, you can add the following configuration to the `deployment.toml` file.
+
+```
+[federated.idp]
+use_idp_role_claim_as_idp_group_claim=true
+```
+
+Additionally, IdP role to local role mappings support had the capability to send unmapped roles. Since IdP groups feature uses IdP groups to local role assignments to resolve roles, there is no concept of sending unmapped roles and only local roles with IdP group assignments should be returned. Since IdP role to local role mappings are migrated to IdP group to role assignments, support of sending unmapped roles behaviour incorporating IdP groups is introduced with a backward compatible configuration. When this configuration is enabled, the IdP groups derived using the group attribute during authentication which do not have an IdP group created under the connection will be treated as unmapped roles. To enable this behaviour, add the following configuration to the `deployment.toml` file.
+
+```
+[idp_role_management]
+return_only_mapped_local_roles=false
+```
+
+> Note : We highly recommend not to enable this configuration unless you have a specific requirement to send unmapped roles. If you have already sending unmapped roles using IdP role to local role mappings, we recommend to configure them with IdP groups and local role assignments.
+
+### System applications
+
+#### Console
+From IS 7.0.0 onwards, the Console application is changed to a non-SaaS behavior model along with the new authorization model.
+With this change, the Console application will be created for each tenant.
+Console access urls will be changed to tenant qualified urls.
+
+Migration of the Console application is handled through the migration client as explained in the [Migrating Authorization Model](migrating-authorization-model.md) document.
+
+#### My Account
+From IS 7.0.0 onwards, the My Account application is changed to a non-SaaS behavior model along with the new authorization model.
+With this change, the My Account application will be created for each tenant.
+My Account access urls will be changed to tenant qualified urls.
+
+Migration of the My Account application is handled through the migration client as explained in the [Migrating Authorization Model](migrating-authorization-model.md) document.
+
+#### Management Console
+From IS 7.0.0 onwards, management console is deprecated in favor of the new console UI with a refreshing look and feel. And it is now only available for a subset of features which are still not available in the new console.
+This includes XACML policy administration and editor, workflow configurations, key store management, registry configurations, tenant management, consent purpose management, and function libraries.
+
+Removed sections include `Users and Roles` (now replaced by a new `Roles` section for managing management console permissions), `User Stores`, `Claims`, `Service Providers`, `Identity Verification Providers`, `Identity Providers`, `Email Templates`, `OIDC Scopes`, `Admin Advisory`, `Remote Logging`, and `Server Roles`. Given these changes, our suggestion is to transition to using the new console, which offers a more streamlined interface and improved functionality.
+
+In order to configure the OTP related configurations, resident identity provider UI can be enabled by adding following configuration to `deployment.toml` file.
+```
+[resident_idp]
+enable = "true"
+```
+> Note: It is not recommended to update any other resident identity provider configurations from here as the legacy management console will soon be removed. Use the latest console to access up-to-date features and for a safer and a more stable experience.
+
+## Other Minor Changes
+
+## OAuth/OIDC
+This section contains the updates done to the OAuth/OIDC related features of IS 7.0.0.
+
+### Allow same OAuth Client ID to be used in multiple organizations
+
+With IS 7.0.0, OAuth consumer application client IDs are now tenant unique allowing the same client ID to exist in multiple organizations.
+
+### Unique scopes to access the system APIs
+
+With the IS 7.0.0, we have introduced new internal scopes for existing system APIs which shared the same scope in prior versions to maintain the uniqueness.
+> For example: `internal_application_mgt_create` scope was used for Application Management, OIDC Scope Management, OAuth2 Scope Management, and Dynamic Client Registration API POST calls. From IS 7.0.0, `internal_application_mgt_create` is only used for Application Management POST calls and new internal scopes are introduced for the other APIs which shared the same scope.
+
+With the above mentioned change, clients which used to invoke the system APIs might be impacted due to not getting the scopes to invoke some APIs which were previously invoked using previous scopes. Scopes of the user roles and requested scopes of the clients should be updated accordingly with this change.
+
+Since there are changes needed from the clients regarding the requested scopes, we have also provided a backward compatibility configuration for migrating purposes to issue the new scopes which are corresponding to the previous scopes when requesting the previous scopes. You can enable the configuration by adding the following configuration to `deployment.toml` file.
+```
+[oauth]
+use_legacy_scopes_as_alias_for_new_scopes=true
+```
+
+> Note: This backward compatible behaviour will be only enforced on the migrating applications. We highly recommend configuring the scope assignments of the roles and the requested scopes of the clients and remove the above configuration since this backward compatible support will be removed in future releases.
+
+In addition to the above configuration, we have introduced another backward compatibility configuration to give the same access level for invoking system APIs using authentication handlers like Basic Authentication which previously relied on user permissions. You can enable the configuration by adding the following configuration to `deployment.toml` file.
+```
+[oauth]
+use_legacy_permission_access_for_user_based_auth=true
+```
+
+> Note: We highly recommend enabling this configuration only if you have used authentication handlers which previously used user permissions for access control of the system APIs. If you have a requirement to enable the configuration initially with the migration, we also recommend configuring the scope assignments of the roles properly with the new scopes and removing the configuration.
+
+### Prevent issuing self-service-related scopes for client credential grant
+
+In IS 7.0.0, the `internal_login` scope, which is used to access the self-service APIs, is no longer issued for the client credential grant. There is no reason for the scope to be issued for the client credential grant as an app is not used to perform any self-service capabilities. Further, issuing the `internal_login` scope for the client credential grant leads to security issues as well.
+
+Users should be aware that this change may affect existing applications, as the omission of the `internal_login` scope could alter application behavior. It is recommended to review and test affected processes thoroughly to ensure smooth operation and to minimize any potential disruptions this update may bring.
+
+### Avoid sending redundant query parameters in the Logout Redirect URL
+
+In prior IS versions, a successful OIDC logout results in the `crId` and `sp` query parameters in the redirect url. With IS 7.0.0, these query parameters are removed from the logout redirect url as they are redundant to be shared with the application.
+
+If you have implemented customizations based on these query parameters, or if maintaining the previous behavior is necessary, you can retain the earlier functionality by adding the following configuration to the `<IS_HOME>/repository/conf/deployment.toml` file.
+
+```
+[oauth.oidc] 
+allow_additional_params_from_post_logout_redirect_uri=true
+```
+
+### Avoid sending redundant query params in the default consent page URL
+
+In prior versions of IS, the default consent page URL included several query parameters: `spQueryParams, application, loggedInUser, tenantDomain, scope, requestedClaims, and userClaimsConsentOnly`. However, to mitigate security risks, IS 7.0.0 will no longer include these query parameters.
+
+If you have implemented customizations based on these query parameters, or if maintaining the previous behavior is necessary, you can retain the earlier functionality by adding the following configuration to the `<IS_HOME>/repository/conf/deployment.toml` file.
+
+```
+[authentication.endpoint.consent_page_redirect_params] 
+allow = true
+```
+
+### Adjustments to Access Token Behavior for Authenticated Clients
+
+In IS 7.0.0, the behavior related to token issuance for authenticated clients has been changed, especially when using grant types such as client credential.
+
+Here are the key alterations:
+1) Subject Claim Modification: The sub claim of the JWT tokens, when issued for an authenticated client, is now set as the client id of the authenticated application. Previously, the sub claim was set as the user ID of the application owner.
+2) Username Field Removal: The username field has been removed from the introspection response for access tokens issued for authenticated clients.
+
+These changes might affect existing workflows and systems that rely on the previous token behavior.
+
+To facilitate users who wish to retain the previous behavior for backward compatibility, two configurations have been introduced. Set the following configurations to false in the `<IS_HOME>/repository/conf/deployment.toml` file if you wish to revert to the former behavior.
+
+```
+[oauth] 
+use_client_id_as_sub_claim_for_app_tokens=false 
+remove_username_from_introspection_response_for_app_tokens=false
+```
+
+### Avoid returning OIDC claims for the client credential grant type
+
+In WSO2 IS 7.0.0, there is a behavioral change regarding the retrieval of OIDC claims for the client credential grant type: OIDC claims are no longer included by default in the JWT token issued for this grant type.
+
+To revert to the previous behavior and include OIDC claims, the following configuration can be added to the `<IS_HOME>/repository/conf/deployment.toml` file.
+
+```
+[oauth.grant_type.client_credentials]
+skip_oidc_claims = false
+```
+
+### Restrict public client support for client credentials grant type
+
+Starting from IS version 7.0.0, the retrieval of an access token using the client credentials grant type for an application defined as a public client will be disabled due to security concerns. This security enhancement is implemented, by default, by setting the `PublicClientAllowed` property value to false for the client credentials grant type.
+
+If the previous behavior is desired, it can be preserved by adding the following configuration to the `deployment.toml` file.
+
+```
+[oauth.grant_type.client_credentials] 
+allow_public_client="true"
+```
+
+### Simplified Configuration for Public Client Support: A Seamless Transition to Granular Grant Type Settings
+
+In the latest version of WSO2 Identity Server 7.0.0, we've made improvements to the way you configure support for public clients. Specifically, the process of indicating which grant types should support public client authentication has been refined for better precision and flexibility.
+
+In the earlier version, an array configuration was used to specify grant types supporting public client authentication. An example looked like this:
+
+```
+[oauth.public_client_support]
+grant_type_names = ["customGrant1"]
+```
+
+Now, we've introduced a more granular way to configure public client support using a property called `PublicClientAllowed`. This property accepts a boolean value (true or false) and is applied to each grant type individually. Here's how you can set it up in the new configuration:
+
+```
+[[oauth.custom_grant_type]]
+name="customGrant1"
+grant_handler="org.wso2.carbon.identity.oauth2.customGrantHandler"
+grant_validator="org.wso2.carbon.identity.oauth2.customGrantValidator"
+[oauth.custom_grant_type.properties]
+PublicClientAllowed=true
+```
+
+Changes and Migration:
+
+- The array configuration for public client support has been removed. If you were using this method, you now need to declare grant types with the new PublicClientAllowed property.
+- Default grant types within Identity Server have been updated with this new property and default values. You can customize these defaults in the `deployment.toml` file.
+- Public client support for the client credentials grant type is now disabled by default. If needed, you can enable it explicitly in the configuration.
+
+For those who had not specified any grant types using the array and relied on the default behavior where all grant types supported public clients, they will now need to configure each required custom grant type with PublicClientAllowed=true to maintain the same functionality.
+
+### Deprecate revoked token headers from `oauth2/revoke` endpoint response
+
+We are updating the response behavior for the `oauth2/revoke` endpoint. This update involves the deprecation of including revoked token headers in the response. This change is in alignment with the [OAuth 2.0 Token Revocation specification (RFC 7009)](https://www.rfc-editor.org/rfc/rfc7009.html), which specifies that a successful token revocation should result in a 200 status code response and does not mandate the inclusion of revoked tokens in the response headers.
+
+Going forward, the `oauth2/revoke` endpoint will no longer include headers containing revoked tokens in its response. This update simplifies the response structure and adheres to the OAuth 2.0 specification more closely.
+
+If the original functionality with revoked token headers in the response is needed, the following configuration can be added to the `deployment.toml` file:
+
+```
+[oauth.revoked_token_headers_in_response] 
+enable=true
+```
+
+### Token will not issues unregistered scopes
+
+With the IS 7.0.0 release,  all the unregistered scopes will be ignored from the token. if you want to add an unregistered scope, then you have to send a scope that matches the `^device_.*` regex pattern (like `device_1`, `device_2`, etc.). Unregistered scopes that match this pattern are automatically included in the token. However, it's key to understand that these unregistered scopes do not show up on the consent page. This means when a user requests both standard system-registered scopes and a scope that follows the `^device_.*` pattern, the consent page will only display the system-registered scopes. Despite this, the final token issued will contain both the system-registered scopes and any scopes that align with the `^device_.*` regex pattern.
+
+#### Disabling the Default Scope Inclusion
+
+If the user wants to disable this behavior, they can do it by adding the following configurations into deployment.toml
+
+```
+[oauth]
+drop_unregistered_scopes = "false"
+allowed_scopes = []
+```
+
+> Note : If you already have scopes mentioned in allowed_scopes, you do not need to set allowed_scopes = []
+
+This change will disable the above-mentioned behavior and issue a token with any random scope.
+
+#### Introducing Custom Scope Patterns
+
+If needed, you can also define your own custom scope patterns. To do this, you need to modify the `deployment.toml` file as shown below
+
+```
+[oauth]
+allowed_scopes = ["^device_.*", "<any_custom_regex_pattern>"]
+```
+
+With this configuration, the system will recognize both the default regex pattern (`^device_.*`) and any user-defined custom regex patterns as valid for inclusion in tokens. If you prefer to use only your custom patterns, excluding the default, you can simply remove the `^device_.*` pattern from the allowed_scopes configuration and include only your specified patterns and scopes. This setup allows for the inclusion of both regex patterns and plain string text in the allowed_scopes configuration.
+
+In summary, these configurations offer you flexibility in managing which scopes are included in tokens, be it through the system's default settings or through customized configurations defined in the `deployment.toml` file.
+
+## SAML
+
+This section contains the updates done to the SAML features of IS 7.0.0.
+
+### Adjustments to SAML Logout Response Signing
+
+In previous versions of WSO2 Identity Server, there was a noticeable difference in handling SAML logout responses between Service Provider (SP) initiated and Identity Provider (IdP) initiated Single Sign-On (SSO) flows. Specifically, while logout responses were signed for SP initiated SSO flows when response signing was enabled, this was not the case for IdP initiated SSO flows.
+
+Change in IS 7.0.0:
+- Standardized Signing Behavior: IS 7.0.0 addresses this inconsistency. Now, if response signing is enabled for a Service Provider, logout responses will be signed for both SP and IdP initiated SSO flows.
+- Consistent Security Posture: This enhancement ensures a uniform security approach, providing consistent behavior regardless of the SSO flow initiation.
+
+Configuration for Previous Behavior:
+- While this update represents a move towards a more standardized and secure approach, some users may prefer to retain the previous behavior for specific use cases.
+- Optional Configuration: To opt-out of signing the SAML logout response during IdP initiated SSO flow, users can modify their `deployment.toml` file with the following setting:
+
+```
+[saml] 
+enable_saml_idp_init_logout_response_signing = false
+```
+
+## Passive STS
+
+This section contains the updates done to the Passive STS features of IS 7.0.0.
+
+### Enhanced Security with reply Logout URL Validation in PassiveSTS
+
+In WSO2 Identity Server 7.0.0, we have introduced validation for the logout url for applications configured with WS-Federation (Passive) authentication.
+
+We have introduced this to improve security, previously there was no validation for the logout url.
+
+A new field is introduced in the WS-Federation (Passive) Configuration to configure the logout reply url and the url in the logout request will be validated against this.
+
+Furthermore, in order to perform the validation, the realm parameter must be sent with the logout request. The realm of the passive sts application should be sent as the query parameter `wtrealm` in the logout request.
+
+To revert to the previous behavior and skip the validation, the following configuration can be added to the `deployment.toml` file:
+
+```
+[passive_sts] 
+enable_logout_wreply_validation = false
+```
+
+## Authentication
+
+This section contains the updates done to the Authentication features of IS 7.0.0.
+
+### Use a different browser to open the email magic link and log in to the app
+
+In prior IS versions, the email magic link authenticator was limited to support login to the app by clicking on the link received to email only within the same browser. With IS 7.0.0, email magic link authenticator is enhanced to support login to the app by clicking the link received to the email opened in a different browser.
+
+If it is required to keep the earlier behavior without allowing cross-browser support, add the following config to the deployment.toml.
+
+```
+[session.nonce.cookie] 
+default_whitelist_authenticators=[]
+```
+
+### Avoid Sending `ske` Query Parameter in the TOTP Enroll Flow
+
+In IS 7.0.0, the `ske` query parameter has been removed from the TOTP enrollment flow due to security concerns. This change might impact existing customizations that rely on this query parameter.
+
+It's important to note that if there is an existing filter policy configured in the `deployment.toml` file to exclude parameters from the URL during the authentication flow, this new change will be overridden by the filter policy configuration. In such instances, it is advisable to take steps to include the `ske` parameter in the exclusion list.
+
+For those looking to maintain backward compatibility, adjustments can be made by adding the following configuration:
+
+```
+[authentication.endpoint.redirect_params] 
+filter_policy = "exclude" 
+remove_on_consume_from_api = "true" 
+parameters = ["loggedInUser"]
+```
+
+### Executing the Mutual TLS Client Authenticator as the final client authenticator
+
+In prior versions of IS, the Mutual TLS client authenticator was being executed before the PrivateKey JWT client authenticator.
+
+With onboarding FAPI compliance from IS 7.0.0, the priority of the Mutual TLS client authenticator was changed accordingly so that it will be executed at last once all the other client authenticators have been executed in order to improve the authenticating process.
+
+If maintaining the previous client authenticator execution order is necessary, you can retain the earlier functionality by adding the following configuration to the `deployment.toml` file.
+
+```
+[event.default_listener.mutual_tls_authenticator] 
+priority=158
+```
+
+## User Management 
+
+This section contains the updates done to the User Management features of IS 7.0.0.
+
+### Allowing only Case-Insensitive Username Filtering in LDAP via SCIM2 API
+
+In WSO2 Identity Server 7.0.0, modifications have been implemented regarding the handling of username filtering in LDAP searches through the SCIM2 APIs. These alterations specifically involve supporting only case-insensitive username filtering in LDAP searches via the SCIM APIs. The purpose of these adjustments is to align LDAP searches in the Identity Server with the default LDAP searching behavior, which inherently operates in a case-insensitive manner.
+
+In earlier versions (6.0 and 6.1) of the Identity Server, the LDAP userstore configuration featured an option named `CaseInsensitiveUsernameFiltering`. This option was initially introduced to maintain backward compatibility. Upon careful review, it has been determined that the `CaseInsensitiveUsernameFiltering` configuration deviates from the default LDAP searching behavior. Consequently, in IS 7.0.0, this configuration has been removed.
+
+This change implies that any integrations or user practices relying on case-sensitive username filtering in LDAP via SCIM2 API need to be reassessed. Adjustments may be necessary to align with the new case-insensitive filtering approach. Administrators and users should be aware of this change to prevent unexpected behaviors in user search and authentication processes.
+
+### Update API Response HTTP Status Code for Locked User Account Scenarios
+
+With the release of version 7.0.0, the Rest API endpoints  now return a `401` Unauthorized status code for responses related to user account lock scenarios, transitioning from the previously used `503` Service Unavailable code.
+
+This modification is made to ensure that the HTTP response accurately represents the error as related to authentication, in compliance with standard practices for HTTP responses to unauthorized access
+
+Users utilizing REST API endpoints requiring authentication should adjust to this change. The shift from a `503` to a `401` response necessitates revised handling strategies, emphasizing the need for users to adapt their integration and migration practices accordingly.
+
+### Support for Tenant Level Password Input Validation
+
+IS 7.0.0 now provides first-class support for tenant level password input validation to enhance the security of user accounts in WSO2 Identity Server. Administrators can elevate password security effortlessly with this, by configuring intuitive validators for minimum and maximum characters, uppercase, lowercase, and special characters – providing a seamless and user-friendly experience for robust password protection.
+
+With enablement of this feature, password policy validation and user store level password pattern validation will be disabled. You can revert this behavior with following configurations.
+
+```
+[identity_mgt.password_policy.password_policy_validation_handler]
+enable=true 
+
+[event.default_listener.validation]
+enable=false
+```
+
+### Improved secondary userstore data validation
+
+With the IS 7.0.0 release, the userstore rest api are improved further to validate the input fields with the appropriate regex to avoid incorporating user-controllable data into dynamically evaluated code.
+Hence it will sanitize the input field based on the regex validation and will reject the input value.
+
+This change has been implemented inorder to avoid security vulnerability that occurs when an application allows user input to be evaluated as an expression within a template or within a specific context that supports expression evaluation.
+
+Hence with the above improvement, if the value for the userstore property starts with ${ or #{ then it will be sanitized and the input value will be rejected. Hence if the users already have the secondary JDBC userstore with the name, connection name, description and display name with the above pattern, then the user has to be aware of this change and need to do the proper data migration.
+
+### Disabling User Account Recovery V1 API
+
+With IS 7.0.0, the User Account Recovery v1 API will be disabled by default. It is recommended to migrate to the User Account Recovery v2 API. For users who still wish to use the v1 API, adjustments to the `deployment.toml` file are necessary. Add the following configuration to enable the v1 API:
+
+```
+[identity_mgt.recovery] 
+enable_v1_api = true
+```
+
+### Retention of Manually Added Roles in JIT Provisioned Users
+
+In earlier versions of WSO2 Identity Server, roles manually added to JIT provisioned users were invalidated and removed during subsequent user provisioning processes. This behavior often led to administrative overhead and inconsistency in role management.
+
+Update in IS 7.0.0:
+- Default Configuration Change: To streamline role management and enhance user experience, the default behavior has been modified. Now, the return_manually_added_local_roles configuration is set to true by default.
+- Effect of the Change: With this update, manually added roles to JIT provisioned users will be retained and not invalidated during subsequent provisioning. This ensures persistence of role assignments, reducing the need for reassigning roles after every provisioning cycle.
+
+If you wish to revert to the previous behavior, where the role assignment is removed from the user, set the mentioned configuration to false. To implement this change, add the following configuration to the `deployment.toml` file.
+
+```
+[idp_role_management] 
+return_manually_added_local_roles=false
+```
+
+### Adjustments to user email/mobile number update verification feature
+
+In the prior versions of Identity Server, even the user email verification for an updated email address feature was enabled, triggering an email account verification is skipped if the `verifyEmail` claim is not set to true in the user update request. Similarly sending the SMS OTP verification for an updated mobile number is also skipped if the `verifyMobile` claim is not set to true in the user update request.
+
+With the IS 7.0.0 release, this behavior has been changed. With the new behavior user email/mobile number update verification feature is not depending on the `verifyEmail/verifyMobile` claim. So it is not needed to send `verifyEmail/verifyMobile` claim with the user update request for triggering verification mail/sms and it is only needed to enable user email/mobile number update verification feature.
+
+To disable this and revert to the previous behavior, add the following configuration to the `deployment.toml` file.
+
+```
+[identity_mgt.user_claim_update]
+use_verify_claim = true
+```
+
+### Reintroducing AllowAssociatingToExistingUser configuration for JIT provisioning
+
+In the Identity Server versions prior to wso2-is-6.0.0,  `AllowAssociatingToExistingUser` configuration was available to configure whether to allow silent JIT provisioning users to associate with existing local users or not.  However, with wso2-is-6.0.0 and wso2-is-6.1.0 product versions this configuration was not included and account linking was enabled by default.
+
+With the IS 7.0.0 release this behavior has been changed as we reintroduce the `AllowAssociatingToExistingUser` configuration which will be disabled by default, not allowing JIT provisioning users to associate with existing local users. To enable the previous behavior of associating to an existing user account, the following configuration has to be added to the `deployment.toml` file.
+
+```
+[authentication.jit_provisioning]
+associating_to_existing_user=true
+```
+
+### Disabling application level outbound provisioning support.
+
+In IS 7.0.0, the configuration of application-based outbound provisioning has been removed. Only the configuration of organization-level outbound provisioning support is provided, as users are provisioned to the organization. Therefore, outbound provisioning should ideally be triggered at the organization level.
+
+If the previous behavior is desired, it can be preserved by adding the following configuration to the `deployment.toml` file
+
+```
+[outbound_provisioning_management]
+enable_application_based_outbound_provisioning=true
+```
+
+### Providing Group Unique ID Support
+
+In the prior versions of Identity Server, according to the SCIM2 implementation, the group attributes (group uuid, created date, modified date) are managed by the Identity Server (in IDN_SCIM_GROUP table). Therefore, when an existing userstore with groups is plugged to IS, SCIM2 will not work because the group attributes are not there in IS.
+
+With the IS 7.0 release, now the group attributes (group uuid, created date, modified date) are stored and managed in the userstore. So when an existing userstore with groups is plugged to IS, SCIM2 is working properly.
+
+To facilitate users who wish to retain the previous behavior for backward compatibility, a userstore property has been introduced. If the property is enabled, then corresponding group meta attributes (group uuid) will be derived from the userstore. If the property is disabled, then the group meta attributed will be derived from the Identity database.
+
+To disable group unique id support in the Primary userstore add below configuration to `deployment.toml` file.
+
+```
+[user_store]
+properties.GroupIDEnabled = false
+```
+
+To disable group unique id support in the Secondary user stores add below userstore property to the `userstore.xml`.
+
+```
+<Property name="GroupIDEnabled">false</Property>
+```
+
+> Note:
+This backward compatible behavior will be only enforced on the migrating user stores. We highly recommend configuring groupId enabled user stores since this backward compatible support will be removed in future releases.
+
+## Claim Mappings
+
+This section contains the updates done related to the Claim Mappings in IS 7.0.0.
+
+### Changing custom claim mapping behavior of connections using authenticators with standard dialect
+
+In prior versions of Identity Server, when the authenticator of a connection has a standard dialect (Eg: OIDC authenticator which has a standard OIDC dialect), standard dialect is used for the claim mappings and custom claim mappings were ignored. With IS 7.0.0, this behavior was changed to use the custom claim mappings when custom claim mappings configured in the connection. Additionally, standard dialect will be used for the claims which do not have custom claim mappings configured.
+
+To enable the previous behavior of using only standard dialect for claim mappings, the following configuration has to be added to the `deployment.toml` file.
+
+```
+[authentication.endpoint]
+enable_custom_claim_mappings=false
+```
+
+Additionally, if you have already used the following configuration previously to use custom claim mappings instead of standard dialect, additional behavior change of using standard dialect for the claims which do not have custom claim mappings will be introduced as mentioned in the initial description.
+
+```
+[authentication.endpoint]
+enable_custom_claim_mappings=true
+```
+
+To disable only the behavior of using standard dialect for the claims which do not have custom claim mappings configured, the following configuration has to be added to the `deployment.toml` file.
+
+```
+[authentication.endpoint]
+enable_merging_custom_claim_mappings_with_default=false
+```
+
+## System Configs
+
+This section contains System Configuration related changes of IS 7.0.0.
+
+### Changing the Recovery Callback URL Regex Pattern
+
+In the IS 7.0.0 release, there have been modifications to the default regex patterns for recovery callback URLs. These alterations might impact existing callback URLs that adhere to previous patterns, potentially causing them to break. Previously, the defaultly provided regex pattern for the callback URL of the recovery endpoint would have posed some security vulnerabilities in certain instances, serving more as a sample regex pattern.
+
+Old regex pattern: `[[<http://localhost:9443>](<http://localhost:9443/>)].**[/authenticationendpoint/login.do]**`
+
+The new regex pattern has been adjusted to: `http:\\/\\/localhost:9443\\/.*` For users who prefer to maintain the old behavior and utilize the previous regex pattern, the following configuration can be added to the `deployment.toml` file.
+
+```
+[identity_mgt] 
+callback_url = "[http://localhost:9443].*[/authenticationendpoint/login.do]*"
+```
+
+### Transitioning from SHA1 to SHA256
+
+In line with enhancing security, WSO2 Identity Server has replaced default SHA1-based algorithms with more secure SHA256-based algorithms. This change, crucial for maintaining robust security standards, affects various components and flows within the system.
+
+Key Changes and Impacts:
+
+- SAML IdPs and SPs: Newly created SAML Identity Providers (IdPs) and Service Providers (SPs) will default to SHA256-based signing and digest algorithms.
+- SAML SP Creation via Metadata: New SAML SPs created using a metadata file will automatically use SHA-256 algorithms. To retain SHA1, modify the following configuration in deployment.toml.
+```
+[saml]
+metadata.sp_enable_sha256= false
+```
+- SAML IdP Metadata Signature: The downloaded SAML IdP metadata file will now be signed with the SHA-256 algorithm. This can be reverted with the following configuration.
+```
+[saml]
+metadata.idp_enable_sha256= false
+```
+- Public Methods in IdentityUtil: Methods like getPPIDDisplayValue(), getHMAC(), and generateUUID() will use SHA256 by default. To revert, adjust the [identity_util] settings.
+```
+[identity_util]
+enable_sha256= false
+```
+- Certificate Thumbprints: These will now be generated using SHA256. This behavior can be changed in the [cert_thumbprint] configuration.
+```
+[cert_thumbprint]
+enable_sha256=false
+```
+- Passive STS Response: The default signing and digest algorithms have shifted to SHA256. To revert to SHA1, use the following configuration.
+```
+[sts]
+signature_algorithm = "<http://www.w3.org/2000/09/xmldsig#rsa-sha1>"
+digest_algorithm = "<http://www.w3.org/2000/09/xmldsig#sha1>"
+```
+- OIDC SP Client Secrets: For newly created OIDC SPs, client secrets will be generated using HMACSHA256, resulting in longer lengths. This can be reverted in the [oauth] configuration.
+```
+[oauth]
+enable_sha256= false
+```
+- JWK Thumbprints in JWT Tokens: Now generated using SHA256. To revert, adjust the [oauth] settings.
+```
+[oauth]
+jwk_thumbprint_enable_sha256= false
+```
+- Auto-Login Cookie Operations: Signing, validation, and thumbprint generation will employ SHA256-based algorithms. This can be changed in the [signature_util] configuration.
+```
+[signature_util]
+enable_sha256_algo= false
+```
+- User Account Association Key: In the Associated Accounts API, the key will be generated using HMAC SHA256, leading to a longer key length. To revert, use the [user_account_association] configuration.
+```
+[user_account_association]
+enable_sha256= false
+```
+In addition to the above mentioned content, a usage of SHA1 was identified in mutual ssl authenticator. SHA1 was being used to generate thumbprints for the client certificates in mutual ssl authenticator. Now, it has been changed to SHA256 by default. The below mentioned configuration can be used to revert the new behaviour to use SHA1 as before.
+```
+[admin_console.authenticator.mutual_ssl_authenticator.config]
+enableSHA256 = false
+``` 
+
+> Reverting to SHA1: While the shift to SHA256 significantly enhances security, users needing to revert to SHA1 can do so through specific configurations in the `deployment.toml` file. However, it's important to note that reverting to less secure algorithms like SHA1 may expose systems to heightened security risks.
+
+### Transitioning to the Improved IdentityDataStoreService: Updating Configuration for Custom Data Store Classes
+
+In the Identity Server 7.0.0, we've made some improvements to how identity data stores are accessed. Previously, you might have configured the identity data store through the `IdentityStoreEventListener`, where the class name of the data store was specified in the event listener's settings.
+
+Now, we've introduced a more streamlined approach called the `IdentityDataStoreService`. This service, functioning as an OSGi service, is dedicated to accessing IdentityDataStores.
+
+The class name configuration for the identity data store has been separated from the listener configurations. If you're using a custom data store class, it's crucial to update your `deployment.toml` file to reflect this choice. This update ensures that your custom class will override the default configuration.
+
+To either maintain the previous behavior or use your custom data store, simply follow these steps and update your deployment.toml:
+
+```
+[identity_datastore]
+datastore_type = "<Name of the identityDataStore class>"
+```
+By making this configuration adjustment, you can ensure that your system aligns with your preferred data store class, whether it's the previous default or a custom class you've implemented. This helps you tailor the system to your specific needs.
+
+### User configured alphanumeric Email OTP type has been reset to the default numeric type
+
+In WSO2 IS 7.0.0, the OnlyNumericCharactersForOtp property for the Email OTP authenticator, first introduced in WSO2 IS 5.10.0, has been renamed to useAlphanumericCharactersForOtp.
+
+Despite this, the default behavior is preserved to use numeric values for OTP. Users who have previously configured Email OTP with the alphanumeric OTP property set to true are required to adjust the field again to receive alphanumeric OTPs.
+
+To reconfigure for alphanumeric OTP, follow these steps:
+
+- Navigate to the Email OTP federated IdP you have set up.
+- Go to the `Federated Authenticators` section.
+- Click to expand the `Email OTP Configuration`.
+- Locate the `Use alphanumeric characters for OTP` setting.
+- If alphanumeric OTPs are desired, ensure this field is checked.
+
+
+### Default usages of MD5 replaced with SHA256
+
+The public certificate for keystores for newly created tenants now will use SHA256 for the signing and digest algorithm by default. Already existing tenant keystores will not be affected by this. To revert this behavior, use the following config in the deployment.toml.
+
+```
+[tenant_mgt] 
+signing_alg = "MD5withRSA"
+```
+
+### Enhancements in OTP Configurations
+
+In IS 7.0.0, we have introduced updates to the OTP (One-Time Password) configurations to enhance user experience and security. These changes affect various user flows, including password reset, user registration, and user claim update.
+
+In versions up to 6.1, the OTP pattern was defined under `[identity_mgt.password_reset_sms]` with a sms_otp_regex configuration. This approach is no longer supported in IS 7.0.0.
+
+The new OTP pattern configuration is more versatile and user-friendly. It includes options for sending OTP instead of UUIDs in email verification links, and customizing the OTP format in terms of length, and the inclusion of uppercase, lowercase, and numeric characters. The configuration is as follows:
+
+```
+[identity_mgt.*.otp]
+send_otp_in_email = false
+use_uppercase_in_otp = true
+use_lowercase_in_otp = true
+use_numeric_in_otp = true
+otp_length = 6
+```
+
+This pattern is applied across various flows, including password reset, user self-registration, lite user registration, user claim updates, email verification upon creation.
+These changes reflect a shift from link-based to OTP-based email confirmations in various scenarios. The customizable OTP format addresses the need for more user-friendly, type-able codes, moving away from the less user-friendly UUID format. This enhancement caters to a broader range of use cases and improves the overall user experience.
+For users who wish to retain the previous SMS OTP regex pattern, similar configurations can still be applied in governance connectors for versions below IS 7.0.0. However, for IS 7.0.0 and onwards, the new OTP configuration pattern is recommended for a more streamlined and secure user experience.
+
+Covered Flows: The new OTP configurations cover a wide range of user interactions, including self-registration with email confirmation, email verification in user addition, lite user registration, password recovery, email update verification, and the ability to resend codes for all these scenarios.
+
+Forced password reset flow
+
+```
+[identity_mgt.password_reset_email.otp]
+send_otp_in_email = false
+use_uppercase_in_otp = true
+use_lowercase_in_otp = true
+use_numeric_in_otp = true
+otp_length = 6
+```
+
+Ask Password flow
+
+```
+[identity_mgt.user_onboarding.otp]
+send_otp_in_email = false
+use_uppercase_in_otp = true
+use_lowercase_in_otp = true
+use_numeric_in_otp = true
+otp_length = 6
+```
+
+User Self-Registration Flow
+
+```
+[identity_mgt.user_self_registration.otp]
+send_otp_in_email = false
+use_uppercase_in_otp = true
+use_lowercase_in_otp = true
+use_numeric_in_otp = true
+otp_length = 6
+```
+
+Lite user Registration Flow
+```
+[identity_mgt.lite_user_registration.otp]
+send_otp_in_email = false
+use_uppercase_in_otp = true
+use_lowercase_in_otp = true
+use_numeric_in_otp = true
+otp_length = 6
+```
+
+User Claim Update Flow
+
+```
+[identity_mgt.user_claim_update.otp] 
+send_otp_in_email = false 
+use_uppercase_in_otp = true 
+use_lowercase_in_otp = true 
+use_numeric_in_otp = true otp_length = 6
+```
+
+## Other
+
+This section contains other changes of IS 7.0.0.
+
+### Disabling Scope Validation for Resource Access Control is No Longer Recommended
+
+With the IS 7.0.0 release, we are no longer recommending to disable the scope validation for the resource access control with the following configuration. From 5.10.0 onwards scope validation has been enabled for the resource access control. When the scope validation is disabled, permissions of the authenticated user were considered for the authorization. With the new version, we are not recommending to disable the scope validation due to security concerns.
+
+```
+[resource_access_control]
+disable_scope_validation = true
+```
+
+### Addition of the .j2 file for charon-config.xml
+
+IS 7.0.0 introduces charon-config.xml.j2 to the product. If any alterations have been made to the default charon-config.xml, those configurations must be moved to deployment.toml.
+Replace the following config with the corresponding values in your charon-config.xml.
+
+```
+[scim2]
+enable_schema_extension=<user-schema-extension-enabled>
+enable_custom_schema_extension=<custom-user-schema-enabled>
+custom_user_schema_uri=<custom-user-schema-uri>
+max_bulk_operations=<bulk-maxOperations>
+max_bulk_payload=<bulk-maxPayloadSize>
+documentation_uri=<documentationUri>
+oauth_bearer.primary=<OAuth Bearer Token - primary>
+http_basic.primary=<HTTP Basic - primary>
+basic_auth_documentation_uri=<OAuth Bearer Token - documentationUri>
+oauth_bearer_auth_documentation_uri=<documentationUri - documentationUri>
+```
+
+### Disabling Internal Session Data Cleanup Task
+
+With IS 7.0.0, the internal session data cleanup task will be disabled by default. This change is implemented as a precautionary measure to enhance system stability and prevent disruptions in production environments.
+
+Reason for the Change:
+
+- Preventing Outages: Previous versions experienced outages and disruptions in production environments due to table locking issues caused by the session data cleanup process. Disabling this task by default aims to address and prevent such incidents.
+
+Impact of the Update:
+- Enhanced Stability: With this update, users will benefit from increased system stability, as the likelihood of outages related to session data cleanup is significantly reduced.
+
+Enabling the Cleanup Task (for Users who Prefer the Previous Behavior):
+- Configuration Adjustment Required: Users who wish to maintain the session data cleanup functionality, as observed in earlier versions of IS, can re-enable this feature. This requires a modification to the `deployment.toml` file.
+- Required Configuration: To activate the internal session data cleanup task, add the following lines to your `deployment.toml` file:
+
+```
+[session_data.cleanup]
+enable_expired_data_cleanup = true
+clean_logged_out_sessions_at_immediate_cycle = true
+enable_pre_session_data_cleanup = true
+```
+
+By incorporating this configuration, the system will continue to perform routine session data cleanup, aligning with behaviors observed in earlier versions.
+
+### Login and logout consent are skipped by default for newly created applications
+
+In IS 7.0.0, the default configuration for new applications will now enable 'skip login and logout consent'. Users will not be routinely prompted for consent during regular login and logout sessions. Previously, applications required users to give explicit consent at each login and logout, which, while secure, was often seen as repetitive and inconvenient.
+
+Previous Default Setting:
+
+Until this update, the default behavior for all new applications mandated users to provide consent at each login and logout event.
+
+New Default Behavior:
+
+- Skip Consent by Default: The default configuration for new applications will now enable 'skip login and logout consent'.
+- The behavior will not change for existing apps.
+
+Customising Consent Settings
+
+If needed, the consent flow can be reinstated by changing the application's advanced settings.
+
+### Changing the x5t#S256 attribute value calculation process of the JWKS response
+
+With the IS 7.0.0 release, when calculating the x5t#S256 attribute value of the JWKS endpoint it will get the sha256 hash/digest (DER encoding) of the certificate which is a 32 byte array and then base64 url encoded. This change has been implemented in order to be aligned with the specification (https://datatracker.ietf.org/doc/html/rfc7515#section-4.1.8)
+
+The x5t#S256 attribute value of JWKS response will be changed. Hence the user needs to make the necessary changes from their end if they are using this attribute value for any validation.
+
+If the user wants to disable this behavior, they can do it by adding the following configuration into `deployment.toml`. 
+
+```
+[oauth.jwks_endpoint]
+is_thumbprint_hexify_required = true
+```
+
+After disabling this behavior the x5t#S256 attribute value will be calculated by, getting the sha256 hash/digest (DER encoding) of the certificate which is a 32 byte array, convert the array to a hexadecimal string and then base64 url encoded.
+
+### Notable JAR Removals
+
+The transition to the workflow connector resulted in the removal of the following JAR files.
+
+- org.objectweb.asm.commons
+- org.objectweb.asm.tree
+- geronimo-spec-jms
+
+If any customizations have been made which use these dependencies, it is essential to include them with your web app.
+
+### The audit tables used in token clean up script should be altered to have the newly introduced column
+
+IS 7.0.0 introduces a new column, `authorized_organization`, to the access token table which may be named differently depending on your configuration but is commonly referred to as `idn_oauth2_access_token`, enhancing organizational authorization control. Existing audit tables, previously used for token cleanup, need to be altered to include this new column.
+
+```
+ALTER TABLE IDN_OAUTH2_ACCESS_TOKEN ADD COLUMN AUTHORIZED_ORGANIZATION varchar(36) NOT NULL DEFAULT 'NONE'
+```
