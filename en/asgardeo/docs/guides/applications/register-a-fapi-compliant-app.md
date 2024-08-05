@@ -1,1 +1,0 @@
-{% include "../../../../includes/guides/applications/register-a-fapi-compliant-app.md" %}

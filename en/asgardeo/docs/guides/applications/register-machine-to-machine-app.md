@@ -1,1 +1,0 @@
-{% include "../../../../includes/guides/applications/register-machine-to-machine-app.md" %}

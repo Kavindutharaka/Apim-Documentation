@@ -1,5 +1,5 @@
 function getSelectedValue() {
-    const baseURl = "http://localhost:8000/asgardeo/docs";
+    const baseURl = "http://localhost:8000/migration/docs";
     var select = document.getElementById("apim-version-1");
     var selectedValue = select.options[select.selectedIndex].value;
 
