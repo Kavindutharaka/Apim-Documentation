@@ -37,59 +37,32 @@
 
     {{ page.content }}
 
-    <!-- <div class="md-home-sections md-column-grid">
+    <div class="md-home-sections md-column-grid">
       <div class="md-grid-column">
         <div class="md-card md-column-grid-item">
           <div class="md-column-grid-item-header-container">
-            <div class="md-column-grid-item-header-text">
-              Migration Search
-            </div>
-            <div class="md-column-grid-item-header-icon">
-              <img src="..\assets\libs\oxygen-ui-icons\1.7.3\search.png" />
-            </div>
+            <div class="md-column-grid-item-header-text">Product</div>
+            <!-- <div class="md-column-grid-item-header-icon">
+            
+            </div> -->
           </div>
           <div class="md-list-item-container">
             <div class="md-list-item">
-              <div class="md-list-item-icon">
-              </div>
+              <!-- <div class="md-list-item-icon"></div> -->
               <div class="md-list-item-text">
-                <select
-        id="apim-version-1"
-        style="width: 150px; height: 30px; font-size: 15px"
-      >
-        <option value="Apim-300">Apim-300</option>
-        <option value="Apim-310">Apim-310</option>
-        <option value="Apim-320">Apim-320</option>
-        <option value="Apim-400">Apim-400</option>
-        <option value="Apim-410">Apim-410</option>
-        <option value="Apim-420">Apim-420</option>
-        <option value="Apim-430">Apim-430</option>
-      </select>
-      <select
-        id="apim-version-2"
-        style="width: 150px; height: 30px; font-size: 15px; margin-left: 10px"
-      >
-        <option value="Apim-420">Apim-420</option>
-        <option value="Apim-430">Apim-430</option>
-        <option value="Apim-440">Apim-440</option>
-      </select>
-
-      <button
-        onclick="getSelectedValue()"
-        style="padding: 5px 10px; margin-left: 10px; background-color: silver;"
-        onmouseover="this.style.transform = 'scale(1.05, 1.05)';this.style.cursor = 'pointer';"
-        onmouseout="this.style.transform = 'scale(1, 1)';"
-      >
-        Select Version
-      </button>
-    </div>
+                <button onclick="navEnterpriseIntegrator()" class="md-button" >
+                  Enterprise-Integrator
+                </button>
+                <button onclick="navApi()" class="md-button">API</button>
+                <button onclick="navOpenBank()" class="md-button" style="padding: 0 59.5px">
+                  Open Banking
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div> -->
-    
+    </div>
   </article>
 </div>
 {% endblock %}

@@ -6,6 +6,10 @@ Please note that no new databases will be created during the data migration proc
 
 This guide offers a general overview of the data migration process and its steps. It also provides a set of guidelines for executing the data migration.
 
+> **Important**
+>
+> From APIM 4.3.0 onwards, running a migration client is no longer required for data migration. Instead, a database script will be used to update the existing table schema with necessary changes, which includes the addition of new columns and new tables.
+
 ## Data Migration Steps
 
 1. Running Database Scripts:

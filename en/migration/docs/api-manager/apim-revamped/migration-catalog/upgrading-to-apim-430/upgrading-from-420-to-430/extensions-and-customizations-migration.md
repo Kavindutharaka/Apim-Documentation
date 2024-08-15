@@ -6,7 +6,7 @@ Follow the steps below to migrate existing API Manager extensions and customizat
 
 ## Prerequisites
 
-1. Read the [Extensions and Customizations Migration Guidelines](../../general-extensions-and-customizations.md).
+1. Read the [Extensions and Customizations Migration Guidelines](../../../general-extensions-and-customizations.md).
 
 2. Identify significant API alterations between API-M version 4.2.0 and API-M version 4.3.0. You may contact [WSO2 Support](https://support.wso2.com/jira/secure/Dashboard.jspa) for assistance.
 
@@ -32,4 +32,4 @@ Follow the steps below to migrate existing API Manager extensions and customizat
 > Note that at this point, we will not be able to migrate customizations related to tenants, as tenant directories are not created until after data migration. Therefore, you will need to move customizations/resources related to tenant directories after data migration, before server startup, as outlined later in [Server Startup Actions](server-startup-actions.md).
 
 ---
-*At this point you should have only the data migration remaining. Please note, once you have completed all the steps up to data migration, before initiating the data migration process, it is recommended to test the new version with the configurations and customizations. Refer to [Planning the Update](../../general-guidelines.md) section.*
+*At this point you should have only the data migration remaining. Please note, once you have completed all the steps up to data migration, before initiating the data migration process, it is recommended to test the new version with the configurations and customizations. Refer to [Planning the Update](../../../general-guidelines.md) section.*

@@ -164,6 +164,12 @@ From DB scripts included [here](../../../../../../api-manager/migration-resource
       ```bash
       api-manager.bat -Dmigrate -DmigrateFromVersion=3.2.0 -DmigratedVersion=4.2.0
       ```
+> **Important**
+> 
+> When migrating the API Manager (APIM) components in a distributed setup, you might encounter the following error. This error can be safely ignored, as it occurs because the other servers (Traffic Manager, Gateway) are not running during the APIM component migration on the Control Plane (CP) node.
+   
+       ERROR - DataEndpointConnectionWorker Error while trying to connect to the endpoint. Cannot borrow client for ssl://localhost:9713
+       org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationException: Cannot borrow client for ssl://localhost:9713
 
 6. After you have successfully completed the migration, stop the server and remove the following files and folders.
     

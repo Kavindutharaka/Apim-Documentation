@@ -4,11 +4,6 @@
 
 Please follow the following to **complete the migration** and start the new API-M server.
 
-> **Important**
->
-> **If you have tenant-specific customizations in the previous version,** ensure that you reapply those customizations before proceeding further. This step should be done at this point because because tenant directories are created only after the data migration step. 
-
-
 ### Step 1: Re-Index the API Manager Artifacts
 
 1. To re-index the API artifacts in the registry, add the following configuration into the `<API-M_4.3.0_HOME>/repository/conf/deployment.toml` file. 
@@ -30,7 +25,7 @@ Please follow the following to **complete the migration** and start the new API-
     >
     > Note that it takes a considerable amount of time for the API Manager to re-index the artifacts, depending on the API count and the number of tenants.
 
-### Step 2: Restart the API Manager
+### Step 2: Start the API Manager
 
 - Restart the API-M server after migration. 
 
@@ -43,3 +38,24 @@ Please follow the following to **complete the migration** and start the new API-
       api-manager.bat
       ```
 - If you are using a distributed setup, start the profiles one after the other. Refer to [Distributed API-M deployment](https://apim.docs.wso2.com/en/4.3.0/install-and-setup/setup/distributed-deployment/understanding-the-distributed-deployment-of-wso2-api-m/) for more information and the suggested sequence of profile startup.
+
+### Step 3: Add Tenant Specific Customizations
+
+If you have tenant-specific customizations in the previous version stop the API-M server and reapply those customizations. 
+
+This step need to be performed after the server startup actions because the tenant directories are created only at the server startup.
+
+### Step 4: Restart the API Manager
+
+- Restart the API-M server after migration.
+
+    - Linux / Mac OS
+      ```bash
+      sh api-manager.sh
+      ```
+    - Windows
+      ```bash
+      api-manager.bat
+      ```
+---
+*By now, you should have completed the migration process successfully.*

@@ -6,14 +6,14 @@ As part of the migration process we need to move several API-M resource and arti
 
 ## Prerequisites
 
-1. Please go through the [Resource and Artifact Migration Guidelines](../../general-resource-and-artifact-migration.md).
+1. Please go through the [Resource and Artifact Migration Guidelines](../../../general-resource-and-artifact-migration.md).
 
 ## Steps for Resource and Artifact Migration
 
 1. To preserve the information about added private keys, certificates, and trusted CAs used in API-M 4.2.0, copy the keystores (e.g., `client-truststore.jks`, `wso2carbon.jks`, and any custom JKS) from `<API-M_4.2.0_HOME>/repository/resources/security` to replace the existing ones in the `<API-M_4.3.0_HOME>/repository/resources/security` directory. 
 
    - If you have a distributed setup, you will have to copy keystores between each old profile and new profile.
-   - Additionally, if you wish to integrate WSO2 IS 6.0.0 as the Resident Key Manager in the new API-M 4.3.0 deployment, make sure to copy the keystores (i.e., client-truststore.jks, wso2carbon.jks in the <API-M_4.2.0_HOME>/repository/resources/security) and replace the existing keystores in to <IS_6.0.0_HOME>/repository/resources/security directory.
+   - Additionally, if WSO2 IS has been configured as the Resident Key Manager in your previous deployment, make sure to copy the keystores (i.e., client-truststore.jks, wso2carbon.jks in the <API-M_4.2.0_HOME>/repository/resources/security) and replace the existing keystores in to <IS_6.0.0_HOME>/repository/resources/security directory.
     ---
     > **Important**
     > 

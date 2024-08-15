@@ -62,11 +62,11 @@
     margin: auto;
     display: flex;
     align-items: start;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .md-grid-column {
-    width: 32%;
+    width: 55%;
     display: inline-block;
     vertical-align: top;
 }
@@ -132,11 +132,14 @@
 .md-list-item-text {
     max-width: 92%;
     white-space: normal;
+    display: inline-block;
 }
 
 .md-list-item-icon,
 .md-list-item-text {
-    display: inline-block;
+    
+    display: flex;
+    justify-content: space-between;
 }
 
 .md-list-item-icon svg>path {
@@ -188,6 +191,11 @@
 
 .md-search__icon[for=__search] svg:last-child {
     display: none;
+}
+
+.md-button{
+    padding: 10px 10px; 
+    margin-left: 10px; 
 }
 
 [data-md-toggle=search]:checked~.md-container .md-home-search-container .md-search__inner {

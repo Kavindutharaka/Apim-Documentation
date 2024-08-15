@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-1. Follow the [Configuration Migration Guidelines](../../general-config-migration.md) and make sure you understand that this step involves moving the relevant `toml` configurations from `<API-M_4.2.0_HOME>/repository/conf/deployment.toml` to `<API-M_4.3.0_HOME>/repository/conf/deployment.toml`
+1. Follow the [Configuration Migration Guidelines](../../../general-config-migration.md) and make sure you understand that this step involves moving the relevant `toml` configurations from `<API-M_4.2.0_HOME>/repository/conf/deployment.toml` to `<API-M_4.3.0_HOME>/repository/conf/deployment.toml`
 
 2. You may refer to API-M 4.3.0 [Configuration Catalog](https://apim.docs.wso2.com/en/4.3.0/reference/config-catalog/) for a comprehensive understanding of the configurations available in API-M 4.3.0.
 
