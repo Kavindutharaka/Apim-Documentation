@@ -16,46 +16,43 @@
   ~ under the License.
   -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>OIDC Sample App</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="theme.css">
-</head>
-<body>
-    <div class="ui two column centered grid">
-        <div class="column center aligned">
-            <img src="images/logo-dark.svg" class="logo-image">
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Migration Documentation</title>
+      <!-- Style Sheet -->
+      <link rel="stylesheet" type="text/css" href="theme.css" />
+      <!-- google font -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet"
+      />
+    </head>
+    <body>
+      <div class="main-container">
+        <div class="header">
+          <img src="./images/wso2-logo-o.svg" />
+          <span>Migration Documentation</span>
         </div>
-        <div class="container">
-            <div class="header-title">
-                <h1>
-                    Java-Based OIDC Authentication Sample<br>
-                    (OIDC - Authorization Code Grant)
-                </h1>
+        <div class="content">
+          <div class="content-element">
+            <img class="content-img-left" src="./images/landing-left.svg" />
+            <div class="loging-box">
+              <span>Welcome to</span>
+              <img src="./images/wso2-logo.svg" height="200" alt="WSO2 logo"/>
+              <span>Migration Docs</span>
+              <form action="./home.html" method="get">
+                <button class="btn-primary" type="submit">Login</button>
+              </form>
             </div>
-            <div class="content">
-                <div class="home-image">
-                    <img src="images/java.svg" class="react-logo-image logo">
-                    <span class="logo-plus">+</span>
-                    <img src="images/oidc.png" class="react-logo-image logo">
-                </div>
-                <h3>
-                    Sample demo to showcase how to authenticate a simple Java application using <br>
-                    <b>Asgardeo</b> with the <a href="https://github.com/asgardeo/asgardeo-tomcat-oidc-agent"
-                                                target="_blank">Asgardeo OIDC Agent</a>
-                </h3>
-                <form action="./home.html" method="get">
-                    <div class="element-padding">
-                        <button class="btn primary" type="submit">Login</button>
-                    </div>
-                </form>
-            </div>
+            <img class="content-img-right" src="./images/landing-right.svg" />
+          </div>
         </div>
-        <img src="images/footer.png" class="footer-image">
-    </div>
-
-</body>
-</html>
+      </div>
+    </body>
+  </html>
+  
