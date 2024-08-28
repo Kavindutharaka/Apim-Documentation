@@ -1,0 +1,162 @@
+# Copyright (c) 2023, WSO2 LLC. (https://www.wso2.com).
+#
+# WSO2 LLC. licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+INHERIT: ../base.yml
+
+# Project information
+site_name: &site_name Enterprise Integration
+site_description: Enterprise Integration
+site_url: https://wso2.com/ei/docs
+
+# Configuration
+theme:
+  custom_dir: ../theme/material
+  logo: assets/images/identity-server-docs-logo-dark.svg
+  logo_light: assets/images/identity-server-docs-logo.svg
+  favicon: assets/images/identity-server-favicon.png
+
+extra:
+  base_path: /ei/docs/
+  product: EI
+  product_name: EI
+  # nav_list:
+  #   - Get Started
+  #   - Guides
+  #   - Tutorials
+  #   - Integrations
+  #   - APIs
+  #   - References
+  home_page_cards:
+    - section:
+      - title: Migration Search
+        icon: .icons/material/magnify.svg
+        icon_color: icon-color-1
+        list_items:
+          - title: Create your Asgardeo account
+            url: Get Started|Create your Asgardeo account
+          - title: Try login with Asgardeo
+            url: Get Started|Try login with Asgardeo
+
+watch:
+  - ../theme/material
+  - ../base.yml
+
+plugins:
+  - search
+  - markdownextradata: {}
+  - include-markdown
+  - redirects:
+      redirect_maps:
+        # 'references/grant-types-in-asgardeo.md': 'references/grant-types.md'
+        # 'guides/users/manage-collaborators.md': 'guides/users/manage-administrators.md'
+        # 'guides/users/manage-customers.md': 'guides/users/manage-users.md'
+        # 'guides/user-self-service/register-security-key.md': 'guides/user-self-service/register-passkey.md'
+        # 'guides/authentication/enterprise-login/index.md': 'guides/authentication/standard-based-login/index.md'
+        # 'guides/authentication/enterprise-login/add-oidc-idp-login.md': 'guides/authentication/standard-based-login/add-oidc-idp-login.md'
+        # 'guides/authentication/enterprise-login/add-saml-idp-login.md': 'guides/authentication/standard-based-login/add-saml-idp-login.md'
+        # 'guides/asgardeo-events.md': 'guides/monitoring/asgardeo-events.md'
+        # 'guides/user-self-service/customer-self-service-portal.md': 'guides/user-self-service/configure-self-service-portal.md'
+        # 'guides/authentication/conditional-auth/ai-loginflow.md': 'guides/authentication/ai-loginflow.md'
+        # 'guides/user-accounts/configure-self-service-portal.md': 'guides/user-self-service/configure-self-service-portal.md'
+        # 'guides/organization-management/onboard-sub-org-admins.md': 'guides/organization-management/onboard-org-admins.md'
+        # 'guides/authentication/configure-a-trusted-token-issuer.md': 'guides/authentication/configure-token-exchange.md'
+        # 'guides/applications/manage-application-roles.md': 'guides/users/manage-roles.md'
+        # 'guides/authentication/app-native-authentication/configure-advanced-app-native-settings.md': 'guides/authentication/app-native-authentication/index.md'
+        # 'apis/authentication.md': 'apis/index.md'
+        './apim-revamped/migration-catalog/upgrading-to-apim-420/index.md': 'apims/index.md'
+
+
+
+# Navigation
+nav:
+  - Home:
+    - Home: index.md
+   
+  - Enterprise Integration:
+    - versions:
+      - Home: enterprise-integrator/index.md
+      
+      - ei-6.6.0:
+        - Read me: enterprise-integrator/migration-docs/ei-6.6.0/upgrading-wso2-ei.md
+        - Migration from 6.1.0: enterprise-integrator/migration-docs/ei-6.6.0/ei-6.1.0-to-ei-6.6.0/upgrading-from-WSO2-EI-6.1.0.md
+        - Migration from 6.1.1: enterprise-integrator/migration-docs/ei-6.6.0/ei-6.1.1-to-ei-6.6.0/upgrading-from-WSO2-EI-6.1.1.md
+        - Migration from 6.2.0: enterprise-integrator/migration-docs/ei-6.6.0/ei-6.2.0-to-ei-6.6.0/upgrading-from-WSO2-EI-6.2.0.md
+        - Migration from 6.3.0: enterprise-integrator/migration-docs/ei-6.6.0/ei-6.3.0-to-ei-6.6.0/upgrading-from-WSO2-EI-6.3.0.md
+        - Migration from 6.4.0: enterprise-integrator/migration-docs/ei-6.6.0/ei-6.4.0-to-ei-6.6.0/upgrading-from-WSO2-EI-6.4.0.md  
+      
+      - ei-7.0.0: 
+        - Read me: enterprise-integrator/migration-docs/ei-7.0.0/upgrading-wso2-ei.md
+        - Migration from 6.x.x: enterprise-integrator/migration-docs/ei-7.0.0/migrating-from-ei-6.x.x.md
+
+      - ei-7.1.0: 
+        - Read me: enterprise-integrator/migration-docs/ei-7.1.0/upgrading-wso2-ei.md
+        - Migration from 7.0.x: enterprise-integrator/migration-docs/ei-7.1.0/migrating-from-ei-7.0.x.md
+        - Migration from 6.x.x: enterprise-integrator/migration-docs/ei-7.1.0/migrating-from-ei-6.x.x.md
+        - Migration from 5.x.x: enterprise-integrator/migration-docs/ei-7.1.0/migrating-from-esb-5.x.x.md     
+  - Micro Integrator:  
+      - MI-4.0.0:
+        - registry-migration: micro-integrator/MI-4.0.0/registry-migration.md   
+        - why-upgrade-to-4.0.0: micro-integrator/MI-4.0.0/why-upgrade-to-4.0.0.md
+        - upgrading-from-ei-6.1.0: micro-integrator/MI-4.0.0/upgrading-from-ei-6.1.0.md 
+        - upgrading-from-ei-6.1.1: micro-integrator/MI-4.0.0/upgrading-from-ei-6.1.1.md
+        - upgrading-from-ei-6.2.x: micro-integrator/MI-4.0.0/upgrading-from-ei-6.2.x.md
+        - upgrading-from-ei-6.3.x: micro-integrator/MI-4.0.0/upgrading-from-ei-6.3.x.md
+        - upgrading-from-ei-6.4.x: micro-integrator/MI-4.0.0/upgrading-from-ei-6.4.x.md
+        - upgrading-from-ei-6.5.x: micro-integrator/MI-4.0.0/upgrading-from-ei-6.5.x.md
+        - upgrading-from-ei-6.6.x: micro-integrator/MI-4.0.0/upgrading-from-ei-6.6.x.md
+        - upgrading-from-ei-7.0.x: micro-integrator/MI-4.0.0/upgrading-from-ei-7.0.x.md
+        - upgrading-from-ei-7.1.x: micro-integrator/MI-4.0.0/upgrading-from-ei-7.1.x.md
+        - upgrading-from-esb-5.x.x: micro-integrator/MI-4.0.0/upgrading-from-esb-5.x.x.md
+
+      - MI-4.1.0: 
+        - registry-migration: micro-integrator/MI-4.1.0/registry-migration.md
+        - why-upgrade-to-4.1.0: micro-integrator/MI-4.1.0/why-upgrade-to-4.1.0.md
+        - upgrading-from-apim-4.0.x: micro-integrator/MI-4.1.0/upgrading-from-apim-4.0.x.md
+        - upgrading-from-ei-6.1.0: micro-integrator/MI-4.1.0/upgrading-from-ei-6.1.0.md
+        - upgrading-from-ei-6.1.1: micro-integrator/MI-4.1.0/upgrading-from-ei-6.1.1.md
+        - upgrading-from-ei-6.2.x: micro-integrator/MI-4.1.0/upgrading-from-ei-6.2.x.md
+        - upgrading-from-ei-6.3.x: micro-integrator/MI-4.1.0/upgrading-from-ei-6.3.x.md
+        - upgrading-from-ei-6.4.x: micro-integrator/MI-4.1.0/upgrading-from-ei-6.4.x.md
+        - upgrading-from-ei-6.5.x: micro-integrator/MI-4.1.0/upgrading-from-ei-6.5.x.md
+        - upgrading-from-ei-6.6.x: micro-integrator/MI-4.1.0/upgrading-from-ei-6.6.x.md
+        - upgrading-from-ei-7.0.x: micro-integrator/MI-4.1.0/upgrading-from-ei-7.0.x.md
+        - upgrading-from-ei-7.1.x: micro-integrator/MI-4.1.0/upgrading-from-ei-7.1.x.md
+        - upgrading-from-esb-5.x.x: micro-integrator/MI-4.1.0/upgrading-from-esb-5.x.x.md
+
+      - MI-4.2.0: 
+        - registry-migration: micro-integrator/MI-4.2.0/registry-migration.md
+        - why-upgrade-to-4.2.0: micro-integrator/MI-4.2.0/why-upgrade-to-4.2.0.md
+        - upgrading-from-apim-4.0.x: micro-integrator/MI-4.2.0/upgrading-from-apim-4.0.x.md
+        - upgrading-from-apim-4.1.x: micro-integrator/MI-4.2.0/upgrading-from-apim-4.1.x.md
+        - upgrading-from-ei-6.1.0: micro-integrator/MI-4.2.0/upgrading-from-ei-6.1.0.md
+        - upgrading-from-ei-6.1.1: micro-integrator/MI-4.2.0/upgrading-from-ei-6.1.1.md
+        - upgrading-from-ei-6.2.x: micro-integrator/MI-4.2.0/upgrading-from-ei-6.2.x.md
+        - upgrading-from-ei-6.3.x: micro-integrator/MI-4.2.0/upgrading-from-ei-6.3.x.md
+        - upgrading-from-ei-6.4.x: micro-integrator/MI-4.2.0/upgrading-from-ei-6.4.x.md
+        - upgrading-from-ei-6.5.x: micro-integrator/MI-4.2.0/upgrading-from-ei-6.5.x.md
+        - upgrading-from-ei-6.6.x: micro-integrator/MI-4.2.0/upgrading-from-ei-6.6.x.md
+        - upgrading-from-ei-7.0.x: micro-integrator/MI-4.2.0/upgrading-from-ei-7.0.x.md
+        - upgrading-from-ei-7.1.x: micro-integrator/MI-4.2.0/upgrading-from-ei-7.1.x.md
+        - upgrading-from-esb-4.9.0: micro-integrator/MI-4.2.0/upgrading-from-esb-4.9.0.md
+        - upgrading-from-esb-5.x.x: micro-integrator/MI-4.2.0/upgrading-from-esb-5.x.x.md
+ 
+not_in_nav: |
+  /page-not-found.md
+  /get-started/explore-asgardeo.md
+  /get-started/start-integrating-apps.md
+  /get-started/try-samples/index.md
+  /get-started/try-your-own-app/index.md
+  /get-started/try-your-own-app/angular.md

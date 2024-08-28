@@ -1,0 +1,188 @@
+# Copyright (c) 2023, WSO2 LLC. (https://www.wso2.com).
+#
+# WSO2 LLC. licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+INHERIT: ../base.yml
+
+# Project information
+site_name: &site_name API
+site_description: APIM Documentation
+site_url: https://wso2.com/apim/docs
+
+# Configuration
+theme:
+  custom_dir: ../theme/material
+  logo: assets/images/home-apim.svg
+  logo_light: assets/images/home-apim-dark.svg
+  favicon: assets/images/identity-server-favicon.png
+
+extra:
+  base_path: /apim/docs/
+  product: API
+  product_name: API
+  # nav_list:
+  #   - Get Started
+  #   - Guides
+  #   - Tutorials
+  #   - Integrations
+  #   - APIs
+  #   - References
+  home_page_cards:
+    - section:
+      - title: API Migration Search
+        icon: .icons/material/magnify.svg
+        icon_color: icon-color-1
+        list_items:
+          - title: Create your Asgardeo account
+            url: Get Started|Create your Asgardeo account
+          - title: Try login with Asgardeo
+            url: Get Started|Try login with Asgardeo
+
+watch:
+  - ../theme/material
+  - ../base.yml
+
+plugins:
+  - search
+  - markdownextradata: {}
+  - include-markdown
+  - redirects:
+      redirect_maps:
+        # 'references/grant-types-in-asgardeo.md': 'references/grant-types.md'
+        # 'guides/users/manage-collaborators.md': 'guides/users/manage-administrators.md'
+        # 'guides/users/manage-customers.md': 'guides/users/manage-users.md'
+        # 'guides/user-self-service/register-security-key.md': 'guides/user-self-service/register-passkey.md'
+        # 'guides/authentication/enterprise-login/index.md': 'guides/authentication/standard-based-login/index.md'
+        # 'guides/authentication/enterprise-login/add-oidc-idp-login.md': 'guides/authentication/standard-based-login/add-oidc-idp-login.md'
+        # 'guides/authentication/enterprise-login/add-saml-idp-login.md': 'guides/authentication/standard-based-login/add-saml-idp-login.md'
+        # 'guides/asgardeo-events.md': 'guides/monitoring/asgardeo-events.md'
+        # 'guides/user-self-service/customer-self-service-portal.md': 'guides/user-self-service/configure-self-service-portal.md'
+        # 'guides/authentication/conditional-auth/ai-loginflow.md': 'guides/authentication/ai-loginflow.md'
+        # 'guides/user-accounts/configure-self-service-portal.md': 'guides/user-self-service/configure-self-service-portal.md'
+        # 'guides/organization-management/onboard-sub-org-admins.md': 'guides/organization-management/onboard-org-admins.md'
+        # 'guides/authentication/configure-a-trusted-token-issuer.md': 'guides/authentication/configure-token-exchange.md'
+        # 'guides/applications/manage-application-roles.md': 'guides/users/manage-roles.md'
+        # 'guides/authentication/app-native-authentication/configure-advanced-app-native-settings.md': 'guides/authentication/app-native-authentication/index.md'
+        # 'apis/authentication.md': 'apis/index.md'
+        './apim-revamped/migration-catalog/upgrading-to-apim-420/index.md': 'apims/index.md'
+
+# Navigation
+nav:
+  - Home:
+    - Home: index.md 
+    
+  - Documentation:
+
+    - What has Changed: api-manager/apim-revamped/what-has-changed.md
+
+    - upgrading-to-apim-400:
+
+      - ReadMe: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-to-apim-400.md
+
+      - API-M 3.0.0 to 4.0.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-300-to-400/config-migration.md
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-300-to-400/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-300-to-400/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-300-to-400/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-300-to-400/server-startup-actions.md
+       
+      - API-M 3.1.0 to 4.0.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-310-to-400/config-migration.md 
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-310-to-400/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-310-to-400/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-310-to-400/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-310-to-400/server-startup-actions.md
+       
+      - API-M 3.2.0 to 4.0.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-320-to-400/config-migration.md
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-320-to-400/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-320-to-400/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-320-to-400/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-400/upgrading-from-320-to-400/server-startup-actions.md
+       
+    
+    - upgrading-to-apim-410:
+
+      - ReadMe: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-to-apim-410.md
+
+      - API-M 3.0.0 to 4.1.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-300-to-410/config-migration.md
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-300-to-410/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-300-to-410/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-300-to-410/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-300-to-410/server-startup-actions.md
+        # - Upgrading from API-M 3.0.0 to 4.1.0: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-300-to-410/upgrading-from-300-to-410.md
+      - API-M 3.1.0 to 4.1.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-310-to-410/config-migration.md 
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-310-to-410/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-310-to-410/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-310-to-410/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-310-to-410/server-startup-actions.md
+      - API-M 3.2.0 to 4.1.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-320-to-410/config-migration.md
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-320-to-410/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-320-to-410/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-320-to-410/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgrading-from-320-to-410/server-startup-actions.md
+      - API-M 4.0.0 to 4.1.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgarding-from-400-to-410/config-migration.md
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgarding-from-400-to-410/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgarding-from-400-to-410/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgarding-from-400-to-410/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-410/upgarding-from-400-to-410/server-startup-actions.md 
+
+    - upgrading-to-apim-420:
+
+      - ReadMe: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-to-apim-420.md
+
+      - API-M 3.0.0 to 4.2.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-300-to-420/config-migration.md
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-300-to-420/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-300-to-420/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-300-to-420/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-300-to-420/server-startup-actions.md 
+      - API-M 3.1.0 to 4.2.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-310-to-420/config-migration.md
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-310-to-420/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-310-to-420/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-310-to-420/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-310-to-420/server-startup-actions.md 
+      - API-M 3.2.0 to 4.2.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-320-to-420/config-migration.md
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-320-to-420/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-320-to-420/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-320-to-420/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-320-to-420/server-startup-actions.md
+      - API-M 4.0.0 to 4.2.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgarding-from-400-to-420/config-migration.md 
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgarding-from-400-to-420/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgarding-from-400-to-420/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgarding-from-400-to-420/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgarding-from-400-to-420/server-startup-actions.md
+      - API-M 4.1.0 to 4.2.0:
+        - step 1 Configurations: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-410-to-420/config-migration.md
+        - step 2 Extensions and Customizations Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-410-to-420/extensions-and-customizations-migration.md
+        - step 3 Resource and Artifact Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-410-to-420/resource-and-artifact-migration.md
+        - step 4 Data Migration: api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-410-to-420/data-migration.md
+        - step 5 Server Startup Actions : api-manager/apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-410-to-420/server-startup-actions.md
+        
+  
+not_in_nav: |
+  /page-not-found.md
+  /get-started/explore-asgardeo.md
+  /get-started/start-integrating-apps.md
+  /get-started/try-samples/index.md
+  /get-started/try-your-own-app/index.md
+  /get-started/try-your-own-app/angular.md

@@ -1,0 +1,194 @@
+# Copyright (c) 2023, WSO2 LLC. (https://www.wso2.com).
+#
+# WSO2 LLC. licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+INHERIT: ../base.yml
+
+# Project information
+site_name: &site_name Open Banking
+site_description: Open Banking
+site_url: https://wso2.com/ob/docs
+
+# Configuration
+theme:
+  custom_dir: ../theme/material
+  logo: assets/images/identity-server-docs-logo-dark.svg
+  logo_light: assets/images/identity-server-docs-logo.svg
+  favicon: assets/images/identity-server-favicon.png
+
+extra:
+  base_path: /ob/docs/
+  product: OB
+  product_name: OB
+  # nav_list:
+  #   - Get Started
+  #   - Guides
+  #   - Tutorials
+  #   - Integrations
+  #   - APIs
+  #   - References
+  home_page_cards:
+    - section:
+      - title: Migration Search
+        icon: .icons/material/magnify.svg
+        icon_color: icon-color-1
+        list_items:
+          - title: Create your Asgardeo account
+            url: Get Started|Create your Asgardeo account
+          - title: Try login with Asgardeo
+            url: Get Started|Try login with Asgardeo
+
+watch:
+  - ../theme/material
+  - ../base.yml
+
+plugins:
+  - search
+  - markdownextradata: {}
+  - include-markdown
+  - redirects:
+      redirect_maps:
+        # 'references/grant-types-in-asgardeo.md': 'references/grant-types.md'
+        # 'guides/users/manage-collaborators.md': 'guides/users/manage-administrators.md'
+        # 'guides/users/manage-customers.md': 'guides/users/manage-users.md'
+        # 'guides/user-self-service/register-security-key.md': 'guides/user-self-service/register-passkey.md'
+        # 'guides/authentication/enterprise-login/index.md': 'guides/authentication/standard-based-login/index.md'
+        # 'guides/authentication/enterprise-login/add-oidc-idp-login.md': 'guides/authentication/standard-based-login/add-oidc-idp-login.md'
+        # 'guides/authentication/enterprise-login/add-saml-idp-login.md': 'guides/authentication/standard-based-login/add-saml-idp-login.md'
+        # 'guides/asgardeo-events.md': 'guides/monitoring/asgardeo-events.md'
+        # 'guides/user-self-service/customer-self-service-portal.md': 'guides/user-self-service/configure-self-service-portal.md'
+        # 'guides/authentication/conditional-auth/ai-loginflow.md': 'guides/authentication/ai-loginflow.md'
+        # 'guides/user-accounts/configure-self-service-portal.md': 'guides/user-self-service/configure-self-service-portal.md'
+        # 'guides/organization-management/onboard-sub-org-admins.md': 'guides/organization-management/onboard-org-admins.md'
+        # 'guides/authentication/configure-a-trusted-token-issuer.md': 'guides/authentication/configure-token-exchange.md'
+        # 'guides/applications/manage-application-roles.md': 'guides/users/manage-roles.md'
+        # 'guides/authentication/app-native-authentication/configure-advanced-app-native-settings.md': 'guides/authentication/app-native-authentication/index.md'
+        # 'apis/authentication.md': 'apis/index.md'
+        './apim-revamped/migration-catalog/upgrading-to-apim-420/index.md': 'apims/index.md'
+
+
+
+# Navigation
+nav:
+  - Home:
+    - Home: index.md
+  # - Get Started:
+  #   - Get Started - Overview: get-started/index.md
+  #   - Create your Asgardeo account: get-started/create-asgardeo-account.md
+  #   - Try login with Asgardeo: get-started/try-it-application.md
+  #   - Start integrating Asgardeo into apps:
+  #     - Start integrating Asgardeo into apps: get-started/start-integrating-apps/index.md
+  #     - Try for a sample app:
+  #       - Try for a sample app: get-started/try-samples/index.md
+  #       - Single Page apps:
+  #         - React: get-started/try-samples/qsg-spa-react.md
+  #         - JavaScript: get-started/try-samples/qsg-spa-javascript.md
+  #       - Web apps:
+  #         - OIDC Java EE: get-started/try-samples/qsg-oidc-webapp-java-ee.md
+  #         - SAML Java EE: get-started/try-samples/qsg-saml-webapp-java-ee.md
+  #     - Try for your own app:
+  #       - Try for your own app: get-started/try-your-own-app/index.md
+  #       - Single Page apps:
+  #         - React: get-started/try-your-own-app/react.md
+  #         - Javascript: get-started/try-your-own-app/javascript.md
+  #       - Web apps:
+  #         - OIDC Java EE: get-started/try-your-own-app/java-ee-oidc.md
+  #         - SAML Java EE: get-started/try-your-own-app/java-ee-saml.md
+
+
+  # - API Migration:
+  #     - Nav Doc - Overview: ./apim-revamped/migration-catalog/upgrading-to-apim-420/index.md
+  #     - Api M Migration Guidelines: ./apim-revamped/general-guidelines.md
+  #     - changed between the API-M versions:
+  #         - What has Changed: ./apim-revamped/what-has-changed.md
+  #         - About this release: https://apim.docs.wso2.com/en/4.2.0/get-started/about-this-release/
+  #     - Update latest update level: https://apim.docs.wso2.com/en/4.2.0/administer/updating-wso2-api-manager/#wso2-updates-20
+
+  #     - Upgrading from API-M 4.1.0 to 4.2.0: ./apim-revamped/migration-catalog/upgrading-to-apim-420/upgrading-from-410-to-420/config-migration/
+# C:\Users\Kavindu\Documents\MkDocs\New New docs-is main\docs-is\en\migration\docs\api-manager\apim-revamped\migration-catalog\upgrading-to-apim-400\upgrading-from-300-to-400\upgrading-from-300-to-400.md
+
+  - Open Banking: 
+    - Home: open-banking/index.md
+
+    - ob-1.4.0-to-1.5.0:
+      - ReadME: open-banking/migration-docs/ob-1.4.0-to-1.5.0/index.md 
+      - application-attribution-changes: open-banking/migration-docs/ob-1.4.0-to-1.5.0/application-attribution-changes.md
+      - custom-configurations: open-banking/migration-docs/ob-1.4.0-to-1.5.0/custom-configurations.md
+      - db-and-synapse-configurations: open-banking/migration-docs/ob-1.4.0-to-1.5.0/db-and-synapse-configurations.md
+      - psd2-data-reporting: open-banking/migration-docs/ob-1.4.0-to-1.5.0/psd2-data-reporting.md
+      - upgrade-the-solution: open-banking/migration-docs/ob-1.4.0-to-1.5.0/upgrade-the-solution.md
+      - upgrading-wso2-ob-au: open-banking/migration-docs/ob-1.4.0-to-1.5.0/upgrading-wso2-ob-au.md
+      - upgrading-wso2-ob-berlin: open-banking/migration-docs/ob-1.4.0-to-1.5.0/upgrading-wso2-ob-berlin.md
+      - upgrading-wso2-ob-uk: open-banking/migration-docs/ob-1.4.0-to-1.5.0/upgrading-wso2-ob-uk.md
+
+    - ob-1.5.0-to-2.0.0:
+      - ReadME: open-banking/migration-docs/ob-1.5.0-to-2.0.0/index.md
+      - upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-au:
+          - Read Me: open-banking/migration-docs/ob-1.5.0-to-2.0.0/upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-au/README.md
+          - upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-au: open-banking/migration-docs/ob-1.5.0-to-2.0.0/upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-au/upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-au.md
+      - upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-berlin: 
+          - Read Me: open-banking/migration-docs/ob-1.5.0-to-2.0.0/upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-berlin/README.md
+          - upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-berlin: open-banking/migration-docs/ob-1.5.0-to-2.0.0/upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-berlin/upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-berlin.md
+      - upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-uk: 
+          - Read Me: open-banking/migration-docs/ob-1.5.0-to-2.0.0/upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-uk/README.md
+          - upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-uk: open-banking/migration-docs/ob-1.5.0-to-2.0.0/upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-uk/upgrade-wso2-open-banking-1.5.0-to-2.0.0-for-uk.md
+      - map-xml-to-toml: open-banking/migration-docs/ob-1.5.0-to-2.0.0/map-xml-to-toml.md
+      - upgrade-wso2-open-banking-1.5.0-to-2.0.0-introduction: open-banking/migration-docs/ob-1.5.0-to-2.0.0/upgrade-wso2-open-banking-1.5.0-to-2.0.0-introduction.md
+          
+    - ob-2.0.0 to 3.0.0 : 
+
+      - ReadMe: open-banking/migration-docs/ob-2.0.0-to-3.0.0/index.md
+      - berlin toolkit 1.0.0:
+          - Read Me: open-banking/migration-docs/ob-2.0.0-to-3.0.0/berlin-toolkit-1.0.0/README.md
+          - modifications-after-migration: open-banking/migration-docs/ob-2.0.0-to-3.0.0/berlin-toolkit-1.0.0/modifications-after-migration.md
+          - open-banking-data-migration: open-banking/migration-docs/ob-2.0.0-to-3.0.0/berlin-toolkit-1.0.0/open-banking-data-migration.md
+          - upgrading-wso2-identity-server: open-banking/migration-docs/ob-2.0.0-to-3.0.0/berlin-toolkit-1.0.0/upgrading-wso2-identity-server.md          
+          - upgrading-wso2-api-manager-320: open-banking/migration-docs/ob-2.0.0-to-3.0.0/berlin-toolkit-1.0.0/upgrading-wso2-api-manager-320.md
+          - upgrading-wso2-api-manager-400: open-banking/migration-docs/ob-2.0.0-to-3.0.0/berlin-toolkit-1.0.0/upgrading-wso2-api-manager-400.md
+          - upgrading-wso2-open-banking-200-to-300: open-banking/migration-docs/ob-2.0.0-to-3.0.0/berlin-toolkit-1.0.0/upgrading-wso2-open-banking-200-to-300.md
+     
+      - cds-toolkit-1.0.0:
+          - Read Me: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/README.md
+          - upgrade wso2 Open banking 2.0.0 to 3.0.0: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/upgrade-wso2-open-banking-2.0.0-to-3.0.0-cds-toolkit-1.0.0.md
+          - old Version: 
+            - modifications-after-migration: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/old-content-backup/modifications-after-migration.md
+            - open-banking-data-migration: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/old-content-backup/open-banking-data-migration.md
+            - Read me: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/old-content-backup/README.md
+            - reporting-data-migration: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/old-content-backup/reporting-data-migration.md
+            - upgrading-wso2-api-manager-320: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/old-content-backup/upgrading-wso2-api-manager-320.md
+            - upgrading-wso2-api-manager-400: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/old-content-backup/upgrading-wso2-api-manager-400.md
+            - upgrading-wso2-identity-server: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/old-content-backup/upgrading-wso2-identity-server.md
+            - upgrading-wso2-open-banking-200-to-300: open-banking/migration-docs/ob-2.0.0-to-3.0.0/cds-toolkit-1.0.0/old-content-backup/upgrading-wso2-open-banking-200-to-300.md
+      
+      - uk-toolkit-1.0.0:
+          - Read Me: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/README.md
+          - upgrade wso2 Open banking 2.0.0 to 3.0.0: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/upgrade-wso2-open-banking-2.0.0-to-3.0.0-uk-toolkit-1.0.0.md
+          - old Version: 
+            - README-v1: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/old-content-backup/README-v1.md
+            - modifications-after-migration: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/old-content-backup/modifications-after-migration.md
+            - open-banking-data-migration: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/old-content-backup/open-banking-data-migration.md           
+            - reporting-data-migration: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/old-content-backup/reporting-data-migration.md
+            - upgrade-api-manager-4.0.0-to-4.2.0-and-identity-server-5.11.0-to-6.1.0: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/old-content-backup/upgrade-api-manager-4.0.0-to-4.2.0-and-identity-server-5.11.0-to-6.1.0.md
+            - upgrade-to-wso2-api-manager-3.2.0: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/old-content-backup/upgrade-to-wso2-api-manager-3.2.0.md
+            - upgrade-to-wso2-api-manager-4.0.0: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/old-content-backup/upgrade-to-wso2-api-manager-4.0.0.md
+            - upgrade-to-wso2-identity-server-5.11.0: open-banking/migration-docs/ob-2.0.0-to-3.0.0/uk-toolkit-1.0.0/old-content-backup/upgrade-to-wso2-identity-server-5.11.0.md
+
+not_in_nav: |
+  /page-not-found.md
+  /get-started/explore-asgardeo.md
+  /get-started/start-integrating-apps.md
+  /get-started/try-samples/index.md
+  /get-started/try-your-own-app/index.md
+  /get-started/try-your-own-app/angular.md
