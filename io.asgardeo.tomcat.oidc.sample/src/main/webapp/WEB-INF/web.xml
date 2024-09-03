@@ -61,6 +61,10 @@
         <filter-name>OIDCAgentFilter</filter-name>
         <url-pattern>/ei/*</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>OIDCAgentFilter</filter-name>
+        <url-pattern>/is/*</url-pattern>
+    </filter-mapping>
 <!--    <servlet>-->
 <!--        <servlet-name>AsgardeoCallbackServlet</servlet-name>-->
 <!--        <servlet-class>com.example.AsgardeoCallbackServlet</servlet-class>-->
